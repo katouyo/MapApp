@@ -81,9 +81,8 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
     // 既に保存されているピンを取得して配置
     func loadPins() {
         
-        //<ピンの色の変更で使おうと思ってやめた>
         //デリゲート先を自分に設定する。
-        //mapView.delegate = self
+        mapView.delegate = self
         
         if let savedPins = UserDefaults.standard.object(forKey: userDefName) as? [[String: Any]] {
             
@@ -181,30 +180,24 @@ class ViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDe
         present(alert, animated: true, completion: nil)
     }
     
-    /*
-     //<ピンの色の変更で使おうと思ってやめた>
-    //viewForAnnotation デリゲートメソッドを実装します。
-    //このメソッドはピンが画面に表示する直前に呼ばれ、今から表示するピンの属性や外観などを
-    //MKPinAnnotationView オブジェクトを使って指定することができます。
+    //このメソッドはピンが画面に表示する直前に呼ばれる
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
         
         let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
         if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView?.animatesDrop = true
+            pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
         }
         else {
             pinView?.annotation = annotation
         }
         //色の変更
-        pinView?.pinTintColor = UIColor.purple
+        pinView!.markerTintColor = UIColor.blue
         return pinView
     }
-     */
     
     //検索ボタン押下時の呼び出しメソッド
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
